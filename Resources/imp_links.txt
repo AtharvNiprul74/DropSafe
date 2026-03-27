@@ -1,1 +1,2 @@
+Architecture diagram link-"https://drive.google.com/file/d/1NfkfUx8ck2UgRFmK30fg6OHnC9O3Mfe9/view?usp=sharing"
 usecase diagram	link- "https://drive.google.com/file/d/1KUm-oiP1WwMh5IdNWULE6sgJ-TcEvZmS/view?usp=sharing"

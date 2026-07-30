@@ -21,6 +21,7 @@ from models.student import Student
 
 from utils.fake_data import FakeData
 from utils.id_generator import IDGenerator
+from utils.random_utils import RandomUtils
 
 
 class StudentGenerator(BaseGenerator):
@@ -69,10 +70,23 @@ class StudentGenerator(BaseGenerator):
 
         for sequence in range(1, self.total_students + 1):
 
-            # Generate gender first
-            gender = FakeData.gender()
+            # -----------------------------
+            # Gender Distribution
+            # -----------------------------
 
-            # Generate gender-specific first name
+            gender_distribution = self.settings["student"]["gender_distribution"]
+
+            if RandomUtils.probability(
+                gender_distribution["Male"] / 100
+            ):
+                gender = "Male"
+            else:
+                gender = "Female"
+
+            # -----------------------------
+            # Names
+            # -----------------------------
+
             if gender == "Male":
                 first_name = FakeData.first_name_male()
             else:
@@ -83,6 +97,16 @@ class StudentGenerator(BaseGenerator):
             date_of_birth = FakeData.date_of_birth(
                 minimum_age=minimum_age,
                 maximum_age=maximum_age,
+            )
+
+            # -----------------------------
+            # Student Status
+            # -----------------------------
+
+            student_status = self.settings["student"]["student_status"]
+
+            is_active = RandomUtils.probability(
+                student_status["active_probability"]
             )
 
             student = Student(
@@ -117,8 +141,7 @@ class StudentGenerator(BaseGenerator):
 
                 semester_id=self.semester.semester_id,
 
-
-                is_active=True,
+                is_active=is_active,
             )
 
             self.records.append(student)

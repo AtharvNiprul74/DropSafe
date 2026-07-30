@@ -1,16 +1,16 @@
 created_at,updated_at,mentor_id,employee_id,first_name,last_name,email,phone,designation,department_id,specialization,max_students,is_active
-2026-07-30T14:48:25.545490,2026-07-30T14:48:25.545495,MN000001,EMP0001,Fariq,Deo,fariq.deo1@college.edu,2922045251,"('Associate Professor', 20)",DEP000001,Artificial Intelligence,30,True
-2026-07-30T14:48:25.545580,2026-07-30T14:48:25.545584,MN000002,EMP0002,Radha,Sawhney,radha.sawhney2@college.edu,0035711536,"('Professor', 5)",DEP000001,Computer Vision,26,True
-2026-07-30T14:48:25.545660,2026-07-30T14:48:25.545663,MN000003,EMP0003,Imaran,Loyal,imaran.loyal3@college.edu,1859482392,"('Assistant Professor', 75)",DEP000001,Natural Language Processing,25,True
-2026-07-30T14:48:25.545751,2026-07-30T14:48:25.545754,MN000004,EMP0004,Wazir,Jhaveri,wazir.jhaveri4@college.edu,0849847028,"('Assistant Professor', 75)",DEP000001,Cloud Computing,26,True
-2026-07-30T14:48:25.545792,2026-07-30T14:48:25.545794,MN000005,EMP0005,Jonathan,Mand,jonathan.mand5@college.edu,8564091852,"('Assistant Professor', 75)",DEP000001,Deep Learning,29,True
-2026-07-30T14:48:25.545829,2026-07-30T14:48:25.545831,MN000006,EMP0006,Ekiya,Sahni,ekiya.sahni6@college.edu,4853017841,"('Assistant Professor', 75)",DEP000001,Deep Learning,31,True
-2026-07-30T14:48:25.545865,2026-07-30T14:48:25.545867,MN000007,EMP0007,Janya,Mall,janya.mall7@college.edu,4237245771,"('Professor', 5)",DEP000001,Deep Learning,26,True
-2026-07-30T14:48:25.545900,2026-07-30T14:48:25.545902,MN000008,EMP0008,Diya,Magar,diya.magar8@college.edu,0229746388,"('Professor', 5)",DEP000001,Data Science,32,True
-2026-07-30T14:48:25.545935,2026-07-30T14:48:25.545937,MN000009,EMP0009,Harinakshi,Soman,harinakshi.soman9@college.edu,8039986339,"('Professor', 5)",DEP000001,Database Systems,28,True
-2026-07-30T14:48:25.545974,2026-07-30T14:48:25.545977,MN000010,EMP0010,Victor,Kala,victor.kala10@college.edu,8135226334,"('Professor', 5)",DEP000001,Cloud Computing,27,True
-2026-07-30T14:48:25.546012,2026-07-30T14:48:25.546014,MN000011,EMP0011,Chanakya,Patla,chanakya.patla11@college.edu,1195534319,"('Assistant Professor', 75)",DEP000001,Cloud Computing,27,True
-2026-07-30T14:48:25.546047,2026-07-30T14:48:25.546050,MN000012,EMP0012,Kalpit,Ramanathan,kalpit.ramanathan12@college.edu,5083430131,"('Assistant Professor', 75)",DEP000001,Artificial Intelligence,32,True
-2026-07-30T14:48:25.546083,2026-07-30T14:48:25.546085,MN000013,EMP0013,Riya,Dhar,riya.dhar13@college.edu,2752211798,"('Associate Professor', 20)",DEP000001,Machine Learning,29,True
-2026-07-30T14:48:25.546118,2026-07-30T14:48:25.546120,MN000014,EMP0014,Zaid,Pandya,zaid.pandya14@college.edu,6988071917,"('Professor', 5)",DEP000001,Natural Language Processing,29,True
-2026-07-30T14:48:25.546154,2026-07-30T14:48:25.546156,MN000015,EMP0015,Benjamin,Salvi,benjamin.salvi15@college.edu,1940117863,"('Associate Professor', 20)",DEP000001,Database Systems,31,True
+2026-07-30T21:22:50.577748,2026-07-30T21:22:50.577751,MN000001,EMP0001,Isaiah,Dugal,isaiah.dugal1@college.edu,6160155870,"('Assistant Professor', 75)",DEP000001,Machine Learning,30,True
+2026-07-30T21:22:50.577803,2026-07-30T21:22:50.577806,MN000002,EMP0002,Lajita,Patla,lajita.patla2@college.edu,5131194578,"('Professor', 5)",DEP000001,Machine Learning,28,True
+2026-07-30T21:22:50.577847,2026-07-30T21:22:50.577849,MN000003,EMP0003,Dalbir,Mutti,dalbir.mutti3@college.edu,5131377172,"('Assistant Professor', 75)",DEP000001,Software Engineering,26,True
+2026-07-30T21:22:50.577900,2026-07-30T21:22:50.577903,MN000004,EMP0004,Chaitaly,Venkataraman,chaitaly.venkataraman4@college.edu,1058582805,"('Professor', 5)",DEP000001,Machine Learning,31,True
+2026-07-30T21:22:50.577940,2026-07-30T21:22:50.577943,MN000005,EMP0005,Aarush,Khatri,aarush.khatri5@college.edu,3914971243,"('Associate Professor', 20)",DEP000001,Software Engineering,26,True
+2026-07-30T21:22:50.577978,2026-07-30T21:22:50.577980,MN000006,EMP0006,Gayathri,Kibe,gayathri.kibe6@college.edu,3732292554,"('Associate Professor', 20)",DEP000001,Database Systems,25,True
+2026-07-30T21:22:50.578015,2026-07-30T21:22:50.578017,MN000007,EMP0007,Ekta,Raj,ekta.raj7@college.edu,8740612192,"('Professor', 5)",DEP000001,Deep Learning,28,True
+2026-07-30T21:22:50.578051,2026-07-30T21:22:50.578054,MN000008,EMP0008,Darsh,Shan,darsh.shan8@college.edu,1068687380,"('Assistant Professor', 75)",DEP000001,Cloud Computing,29,True
+2026-07-30T21:22:50.578088,2026-07-30T21:22:50.578091,MN000009,EMP0009,Kala,Kadakia,kala.kadakia9@college.edu,6774600808,"('Associate Professor', 20)",DEP000001,Software Engineering,28,True
+2026-07-30T21:22:50.578143,2026-07-30T21:22:50.578146,MN000010,EMP0010,Mahika,Roy,mahika.roy10@college.edu,0423864451,"('Assistant Professor', 75)",DEP000001,Computer Vision,30,True
+2026-07-30T21:22:50.578181,2026-07-30T21:22:50.578184,MN000011,EMP0011,Riya,Guha,riya.guha11@college.edu,0061755863,"('Professor', 5)",DEP000001,Natural Language Processing,30,True
+2026-07-30T21:22:50.578218,2026-07-30T21:22:50.578221,MN000012,EMP0012,Charita,Upadhyay,charita.upadhyay12@college.edu,7175424101,"('Associate Professor', 20)",DEP000001,Database Systems,31,True
+2026-07-30T21:22:50.578255,2026-07-30T21:22:50.578257,MN000013,EMP0013,Ishita,Sengupta,ishita.sengupta13@college.edu,9072834521,"('Professor', 5)",DEP000001,Machine Learning,29,True
+2026-07-30T21:22:50.578291,2026-07-30T21:22:50.578294,MN000014,EMP0014,Pooja,Din,pooja.din14@college.edu,2850142111,"('Professor', 5)",DEP000001,Artificial Intelligence,26,True
+2026-07-30T21:22:50.578327,2026-07-30T21:22:50.578329,MN000015,EMP0015,Oeshi,Nazareth,oeshi.nazareth15@college.edu,8633326152,"('Professor', 5)",DEP000001,Software Engineering,31,True

@@ -1,8 +1,9 @@
-🎓 DropSafe
+<p align="center"> # 🎓 DropSafe
+</p>
 
 
 <p align="center">
-AI-Powered Student Dropout Prediction & Early Intervention System
+### AI-Powered Student Dropout Prediction & Early Intervention System
 </p>
 
 <p align="center">

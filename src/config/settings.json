@@ -1,0 +1,233 @@
+{
+  "generation": {
+    "start_year": 2023,
+    "number_of_years": 4,
+
+    "current_academic_year": 2026,
+    "current_semester": 7,
+
+    "department_code": "AIML",
+    "total_semesters": 8,
+
+    "number_of_mentors": 15,
+    "number_of_students": 500,
+
+    "default_section": "A",
+    "maximum_students_per_section": 60,
+
+    "repeat_course_probability": 0.05,
+    "withdrawal_probability": 0.02,
+
+    "minimum_age": 18,
+    "maximum_age": 24
+  },
+
+  "attendance": {
+    "minimum": 35,
+    "maximum": 100
+  },
+
+  "assignment": {
+    "minimum": 20,
+    "maximum": 100
+  },
+
+  "internal_submission": {
+    "minimum": 20,
+    "maximum": 100
+  },
+
+  "marks": {
+    "cie_max": 30,
+    "see_max": 70,
+    "total_max": 100
+  },
+
+  "grading": {
+    "round_digits": 2,
+    "pass_marks": 40,
+
+    "grades": [
+      {
+        "grade": "O",
+        "description": "Outstanding",
+        "min_marks": 90,
+        "max_marks": 100,
+        "grade_point": 10
+      },
+      {
+        "grade": "A+",
+        "description": "Excellent",
+        "min_marks": 80,
+        "max_marks": 89,
+        "grade_point": 9
+      },
+      {
+        "grade": "A",
+        "description": "Very Good",
+        "min_marks": 70,
+        "max_marks": 79,
+        "grade_point": 8
+      },
+      {
+        "grade": "B+",
+        "description": "Good",
+        "min_marks": 60,
+        "max_marks": 69,
+        "grade_point": 7
+      },
+      {
+        "grade": "B",
+        "description": "Above Average",
+        "min_marks": 50,
+        "max_marks": 59,
+        "grade_point": 6
+      },
+      {
+        "grade": "C",
+        "description": "Average",
+        "min_marks": 45,
+        "max_marks": 49,
+        "grade_point": 5
+      },
+      {
+        "grade": "P",
+        "description": "Pass",
+        "min_marks": 40,
+        "max_marks": 44,
+        "grade_point": 4
+      },
+      {
+        "grade": "F",
+        "description": "Fail",
+        "min_marks": 0,
+        "max_marks": 39,
+        "grade_point": 0
+      }
+    ]
+  },
+  "profiles": {
+  "Excellent": {
+    "percentage": 10,
+    "attendance": [90, 100],
+    "assignment": [90, 100],
+    "cie": [27, 30],
+    "see": [63, 70],
+    "dropout_probability": 0.01
+  },
+
+  "Good": {
+    "percentage": 25,
+    "attendance": [80, 90],
+    "assignment": [75, 90],
+    "cie": [22, 26],
+    "see": [55, 62],
+    "dropout_probability": 0.03
+  },
+
+  "Average": {
+    "percentage": 40,
+    "attendance": [65, 80],
+    "assignment": [60, 75],
+    "cie": [16, 21],
+    "see": [45, 54],
+    "dropout_probability": 0.08
+  },
+
+  "Improving": {
+    "percentage": 10,
+    "attendance": [55, 70],
+    "assignment": [50, 65],
+    "cie": [12, 18],
+    "see": [40, 48],
+    "dropout_probability": 0.15
+  },
+
+  "Declining": {
+    "percentage": 10,
+    "attendance": [40, 60],
+    "assignment": [35, 55],
+    "cie": [8, 15],
+    "see": [30, 42],
+    "dropout_probability": 0.35
+  },
+
+  "HighRisk": {
+    "percentage": 5,
+    "attendance": [20, 45],
+    "assignment": [20, 40],
+    "cie": [0, 10],
+    "see": [0, 35],
+    "dropout_probability": 0.80
+  }
+},
+  "student": {
+  "age_by_semester": {
+    "1": {
+      "minimum_age": 17,
+      "maximum_age": 19
+    },
+    "2": {
+      "minimum_age": 17,
+      "maximum_age": 19
+    },
+    "3": {
+      "minimum_age": 18,
+      "maximum_age": 20
+    },
+    "4": {
+      "minimum_age": 18,
+      "maximum_age": 20
+    },
+    "5": {
+      "minimum_age": 19,
+      "maximum_age": 21
+    },
+    "6": {
+      "minimum_age": 19,
+      "maximum_age": 21
+    },
+    "7": {
+      "minimum_age": 20,
+      "maximum_age": 22
+    },
+    "8": {
+      "minimum_age": 20,
+      "maximum_age": 22
+    }
+  },
+
+  "gender_distribution": {
+    "Male": 55,
+    "Female": 45
+  },
+
+  "student_status": {
+    "active_probability": 0.98,
+    "inactive_probability": 0.02
+  },
+
+  "section_distribution": [
+    "A",
+    "B",
+    "C"
+  ],
+
+  "email_domain": "student.college.edu",
+
+  "phone": {
+    "country_code": "+91",
+    "valid_prefixes": [
+      "6",
+      "7",
+      "8",
+      "9"
+    ]
+  }
+},
+
+  "export": {
+    "csv_encoding": "utf-8",
+    "date_format": "%Y-%m-%d"
+  }
+}

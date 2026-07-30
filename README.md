@@ -1,11 +1,12 @@
-<p align="center"> # 🎓 DropSafe
-</p>
+<div align="center">
 
+<h1>🎓 DropSafe</h1>
 
-<p align="center">
-### AI-Powered Student Dropout Prediction & Early Intervention System
-</p>
+<h3>AI-Powered Student Dropout Prediction & Early Intervention System</h3>
 
+<p><strong>Predict Early. Intervene Smarter. Empower Every Student.</strong></p>
+
+</div>
 <p align="center">
   <strong>Predict Early. Intervene Smarter. Empower Every Student.</strong>
 </p>

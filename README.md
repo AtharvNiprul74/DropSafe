@@ -246,5 +246,3 @@ If you find this project useful, consider giving it a ⭐ on GitHub!
 <p align="center">
 Made with ❤️ by Team DropSafe
 </p>
-=======
->>>>>>> 1d57f77 (Project setup is Completed)

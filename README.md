@@ -1,5 +1,5 @@
-<p align="center"> 🎓 DropSafe
-</p>
+🎓 DropSafe
+
 
 <p align="center">
 AI-Powered Student Dropout Prediction & Early Intervention System

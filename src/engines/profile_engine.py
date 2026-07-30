@@ -13,10 +13,6 @@ Author:
 
 from __future__ import annotations
 
-import json
-import random
-
-from models.student import Student
 from models.student_profile import StudentProfile
 
 from utils.id_generator import IDGenerator
@@ -39,11 +35,21 @@ class ProfileEngine:
 
         total_students = len(self.students)
 
+        total_percentage = sum(
+            config["percentage"]
+            for config in self.profile_config.values()
+        )
+
+        if total_percentage != 100:
+            raise ValueError(
+                f"Profile percentages must total 100. Found {total_percentage}."
+            )
+
         profile_pool = []
 
         for profile_name, config in self.profile_config.items():
 
-            count = round(
+            count = int(
                 total_students *
                 config["percentage"] / 100
             )
@@ -53,8 +59,10 @@ class ProfileEngine:
             )
 
         while len(profile_pool) < total_students:
-
             profile_pool.append("Average")
+
+        while len(profile_pool) > total_students:
+            profile_pool.pop()
 
         RandomUtils.shuffle(profile_pool)
 
@@ -71,9 +79,7 @@ class ProfileEngine:
 
                 StudentProfile(
 
-                    profile_id=(
-                        IDGenerator.generate_profile_id()
-                    ),
+                    profile_id=IDGenerator.generate_profile_id(),
 
                     student_id=student.student_id,
 
@@ -91,9 +97,9 @@ class ProfileEngine:
                     see_min=config["see"][0],
                     see_max=config["see"][1],
 
-                    dropout_probability=(
-                        config["dropout_probability"]
-                    ),
+                    dropout_probability=config[
+                        "dropout_probability"
+                    ],
                 )
 
             )

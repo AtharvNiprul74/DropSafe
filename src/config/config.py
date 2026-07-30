@@ -6,6 +6,20 @@ Loads project settings and file paths.
 import json
 from pathlib import Path
 
+
+def _get_nested(mapping: dict, *keys, default=None):
+    """Safely retrieve a nested value from a settings mapping."""
+
+    current = mapping
+
+    for key in keys:
+        if not isinstance(current, dict) or key not in current:
+            return default
+        current = current[key]
+
+    return current
+
+
 # ==========================================================
 # PROJECT DIRECTORIES
 # ==========================================================
@@ -35,65 +49,79 @@ with open(SETTINGS_FILE, "r", encoding="utf-8") as file:
 # PROJECT
 # ==========================================================
 
-PROJECT_NAME = SETTINGS["project"]["name"]
+PROJECT_NAME = _get_nested(SETTINGS, "project", "name", default="DropSafe")
 
-PROJECT_VERSION = SETTINGS["project"]["version"]
+PROJECT_VERSION = _get_nested(SETTINGS, "project", "version", default="1.0.0")
 
 # ==========================================================
 # GENERATION
 # ==========================================================
 
-RANDOM_SEED = SETTINGS["generation"]["random_seed"]
+GENERATION_SETTINGS = SETTINGS.get("generation", {})
+STUDENT_SETTINGS = SETTINGS.get("student", {})
+ATTENDANCE_SETTINGS = SETTINGS.get("attendance", {})
+MARKS_SETTINGS = SETTINGS.get("marks", {})
 
-DEFAULT_STUDENT_COUNT = SETTINGS["generation"]["default_student_count"]
+RANDOM_SEED = GENERATION_SETTINGS.get("random_seed", 42)
+
+DEFAULT_STUDENT_COUNT = GENERATION_SETTINGS.get(
+    "default_student_count",
+    GENERATION_SETTINGS.get("number_of_students", 500),
+)
 
 # ==========================================================
 # STUDENT
 # ==========================================================
 
-MIN_AGE = SETTINGS["student"]["min_age"]
+MIN_AGE = STUDENT_SETTINGS.get("min_age", GENERATION_SETTINGS.get("minimum_age", 18))
 
-MAX_AGE = SETTINGS["student"]["max_age"]
+MAX_AGE = STUDENT_SETTINGS.get("max_age", GENERATION_SETTINGS.get("maximum_age", 24))
 
 # ==========================================================
 # ATTENDANCE
 # ==========================================================
 
-MIN_ATTENDANCE = SETTINGS["attendance"]["min"]
+MIN_ATTENDANCE = ATTENDANCE_SETTINGS.get(
+    "minimum",
+    ATTENDANCE_SETTINGS.get("min", 35),
+)
 
-MAX_ATTENDANCE = SETTINGS["attendance"]["max"]
+MAX_ATTENDANCE = ATTENDANCE_SETTINGS.get(
+    "maximum",
+    ATTENDANCE_SETTINGS.get("max", 100),
+)
 
 # ==========================================================
 # MARKS
 # ==========================================================
 
-MAX_MSE = SETTINGS["marks"]["mse_max"]
+MAX_MSE = MARKS_SETTINGS.get("mse_max", MARKS_SETTINGS.get("cie_max", 30))
 
-MAX_ISE = SETTINGS["marks"]["ise_max"]
+MAX_ISE = MARKS_SETTINGS.get("ise_max", MARKS_SETTINGS.get("cie_max", 30))
 
-MAX_SEE = SETTINGS["marks"]["see_max"]
+MAX_SEE = MARKS_SETTINGS.get("see_max", MARKS_SETTINGS.get("see_max", 70))
 
 # ==========================================================
 # GRADE POINTS
 # ==========================================================
 
-GRADE_POINTS = SETTINGS["grade_points"]
+GRADE_POINTS = SETTINGS.get("grade_points", {})
 
 # ==========================================================
 # RISK LABELS
 # ==========================================================
 
-LOW_RISK = SETTINGS["risk_labels"]["low"]
+LOW_RISK = _get_nested(SETTINGS, "risk_labels", "low", default="Low")
 
-MEDIUM_RISK = SETTINGS["risk_labels"]["medium"]
+MEDIUM_RISK = _get_nested(SETTINGS, "risk_labels", "medium", default="Medium")
 
-HIGH_RISK = SETTINGS["risk_labels"]["high"]
+HIGH_RISK = _get_nested(SETTINGS, "risk_labels", "high", default="High")
 
 # ==========================================================
 # PROFILE DISTRIBUTION
 # ==========================================================
 
-PROFILE_DISTRIBUTION = SETTINGS["profiles"]
+PROFILE_DISTRIBUTION = SETTINGS.get("profiles", {})
 
 # ==========================================================
 # INPUT FILES

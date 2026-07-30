@@ -1,7 +1,14 @@
 {
+  "project": {
+    "name": "DropSafe",
+    "version": "1.0.0"
+  },
+
   "generation": {
     "start_year": 2023,
     "number_of_years": 4,
+    "random_seed": 42,
+    "default_student_count": 500,
 
     "current_academic_year": 2026,
     "current_semester": 7,
@@ -106,125 +113,141 @@
       }
     ]
   },
+
   "profiles": {
-  "Excellent": {
-    "percentage": 10,
-    "attendance": [90, 100],
-    "assignment": [90, 100],
-    "cie": [27, 30],
-    "see": [63, 70],
-    "dropout_probability": 0.01
-  },
 
-  "Good": {
-    "percentage": 25,
-    "attendance": [80, 90],
-    "assignment": [75, 90],
-    "cie": [22, 26],
-    "see": [55, 62],
-    "dropout_probability": 0.03
-  },
+    "Excellent": {
+      "percentage": 8,
+      "attendance": [90, 100],
+      "assignment": [90, 100],
+      "cie": [24, 30],
+      "see": [55, 70],
+      "dropout_probability": 0.01
+    },
 
-  "Average": {
-    "percentage": 40,
-    "attendance": [65, 80],
-    "assignment": [60, 75],
-    "cie": [16, 21],
-    "see": [45, 54],
-    "dropout_probability": 0.08
-  },
+    "Good": {
+      "percentage": 22,
+      "attendance": [80, 95],
+      "assignment": [75, 90],
+      "cie": [18, 28],
+      "see": [45, 65],
+      "dropout_probability": 0.03
+    },
 
-  "Improving": {
-    "percentage": 10,
-    "attendance": [55, 70],
-    "assignment": [50, 65],
-    "cie": [12, 18],
-    "see": [40, 48],
-    "dropout_probability": 0.15
-  },
+    "Average": {
+      "percentage": 35,
+      "attendance": [65, 85],
+      "assignment": [60, 80],
+      "cie": [10, 24],
+      "see": [30, 58],
+      "dropout_probability": 0.10
+    },
 
-  "Declining": {
-    "percentage": 10,
-    "attendance": [40, 60],
-    "assignment": [35, 55],
-    "cie": [8, 15],
-    "see": [30, 42],
-    "dropout_probability": 0.35
-  },
+    "Improving": {
+      "percentage": 15,
+      "attendance": [55, 75],
+      "assignment": [50, 70],
+      "cie": [8, 20],
+      "see": [25, 50],
+      "dropout_probability": 0.20
+    },
 
-  "HighRisk": {
-    "percentage": 5,
-    "attendance": [20, 45],
-    "assignment": [20, 40],
-    "cie": [0, 10],
-    "see": [0, 35],
-    "dropout_probability": 0.80
-  }
-},
-  "student": {
-  "age_by_semester": {
-    "1": {
-      "minimum_age": 17,
-      "maximum_age": 19
+    "Declining": {
+      "percentage": 12,
+      "attendance": [40, 65],
+      "assignment": [35, 60],
+      "cie": [4, 16],
+      "see": [15, 40],
+      "dropout_probability": 0.45
     },
-    "2": {
-      "minimum_age": 17,
-      "maximum_age": 19
-    },
-    "3": {
-      "minimum_age": 18,
-      "maximum_age": 20
-    },
-    "4": {
-      "minimum_age": 18,
-      "maximum_age": 20
-    },
-    "5": {
-      "minimum_age": 19,
-      "maximum_age": 21
-    },
-    "6": {
-      "minimum_age": 19,
-      "maximum_age": 21
-    },
-    "7": {
-      "minimum_age": 20,
-      "maximum_age": 22
-    },
-    "8": {
-      "minimum_age": 20,
-      "maximum_age": 22
+
+    "HighRisk": {
+      "percentage": 8,
+      "attendance": [20, 50],
+      "assignment": [20, 45],
+      "cie": [0, 12],
+      "see": [0, 30],
+      "dropout_probability": 0.80
     }
+
   },
 
-  "gender_distribution": {
-    "Male": 55,
-    "Female": 45
+  "student": {
+
+    "age_by_semester": {
+
+      "1": {
+        "minimum_age": 17,
+        "maximum_age": 19
+      },
+
+      "2": {
+        "minimum_age": 17,
+        "maximum_age": 19
+      },
+
+      "3": {
+        "minimum_age": 18,
+        "maximum_age": 20
+      },
+
+      "4": {
+        "minimum_age": 18,
+        "maximum_age": 20
+      },
+
+      "5": {
+        "minimum_age": 19,
+        "maximum_age": 21
+      },
+
+      "6": {
+        "minimum_age": 19,
+        "maximum_age": 21
+      },
+
+      "7": {
+        "minimum_age": 20,
+        "maximum_age": 22
+      },
+
+      "8": {
+        "minimum_age": 20,
+        "maximum_age": 22
+      }
+
+    },
+
+    "gender_distribution": {
+      "Male": 55,
+      "Female": 45
+    },
+
+    "student_status": {
+      "active_probability": 0.98,
+      "inactive_probability": 0.02
+    },
+
+    "section_distribution": [
+      "A",
+      "B",
+      "C"
+    ],
+
+    "email_domain": "student.college.edu",
+
+    "phone": {
+      "country_code": "+91",
+
+      "valid_prefixes": [
+        "6",
+        "7",
+        "8",
+        "9"
+      ]
+    }
+
   },
-
-  "student_status": {
-    "active_probability": 0.98,
-    "inactive_probability": 0.02
-  },
-
-  "section_distribution": [
-    "A",
-    "B",
-    "C"
-  ],
-
-  "email_domain": "student.college.edu",
-
-  "phone": {
-    "country_code": "+91",
-    "valid_prefixes": [
-      "6",
-      "7",
-      "8",
-      "9"
-    ]
-  }
-},
 
   "export": {
     "csv_encoding": "utf-8",

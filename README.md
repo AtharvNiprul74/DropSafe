@@ -7,10 +7,6 @@
 <p><strong>Predict Early. Intervene Smarter. Empower Every Student.</strong></p>
 
 </div>
-<p align="center">
-  <strong>Predict Early. Intervene Smarter. Empower Every Student.</strong>
-</p>
-
 ---
 
 ## 📖 Overview

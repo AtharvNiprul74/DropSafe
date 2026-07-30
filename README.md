@@ -1,5 +1,8 @@
 # 🎓 DropSafe
+
+<p align="center">
 ### AI-Powered Student Dropout Prediction & Early Intervention System
+</p>
 
 <p align="center">
   <strong>Predict Early. Intervene Smarter. Empower Every Student.</strong>

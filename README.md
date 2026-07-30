@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div align="center">
 
 <h1>🎓 DropSafe</h1>
@@ -246,3 +247,21 @@ If you find this project useful, consider giving it a ⭐ on GitHub!
 <p align="center">
 Made with ❤️ by Team DropSafe
 </p>
+=======
+# Student Risk Prediction System
+
+Objective:
+Predict student dropout risk using Machine Learning.
+
+Models:
+- Logistic Regression
+- Decision Tree
+- Random Forest
+- XGBoost
+
+Dataset:
+Synthetic academic dataset.
+
+Author:
+Saklen Manjire
+>>>>>>> 1d57f77 (Project setup is Completed)

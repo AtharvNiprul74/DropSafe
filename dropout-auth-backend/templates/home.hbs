@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Home — Dropout Prediction Portal</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <div class="home-card">
+    <header>
+      <h1>Welcome, {{user.username}}</h1>
+      <form method="POST" action="/logout" class="logout-form">
+        <button type="submit">Log out</button>
+      </form>
+    </header>
+
+    <p class="role-badge">Role: {{user.role}}</p>
+
+    {{#if (eq user.role "admin")}}
+      <section>
+        <h2>Admin dashboard</h2>
+        <p>Overview of student risk distribution, alert management, and mentor assignment go here.</p>
+      </section>
+    {{/if}}
+
+    {{#if (eq user.role "mentor")}}
+      <section>
+        <h2>Mentor portal</h2>
+        <p>Your assigned at-risk students, chat, and follow-up notes go here.</p>
+      </section>
+    {{/if}}
+
+    {{#if (eq user.role "student")}}
+      <section>
+        <h2>Student chat</h2>
+        <p>Your WhatsApp-linked wellness check-ins and mentor chat go here.</p>
+      </section>
+    {{/if}}
+  </div>
+</body>
+</html>

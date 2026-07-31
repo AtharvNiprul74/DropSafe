@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login — Dropout Prediction Portal</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <div class="auth-card">
+    <h1>Sign in</h1>
+    <p class="subtitle">Student Dropout Prediction &amp; Mentoring Portal</p>
+
+    {{#if error}}
+      <div class="alert">{{error}}</div>
+    {{/if}}
+
+    <form method="POST" action="/login">
+      <label for="username">Username</label>
+      <input type="text" id="username" name="username" required autofocus />
+
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" required />
+
+      <button type="submit">Log in</button>
+    </form>
+
+    <p class="switch">
+      Don't have an account? <a href="/signup">Create one</a>
+    </p>
+  </div>
+</body>
+</html>

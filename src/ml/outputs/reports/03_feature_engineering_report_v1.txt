@@ -1,0 +1,145 @@
+======================================================================
+DropSafe Feature Engineering Report
+======================================================================
+
+Rows : 1967
+Columns : 42
+
+Columns
+----------------------------------------------------------------------
+student_id
+gender
+is_active
+attendance_min
+attendance_max
+assignment_min
+assignment_max
+cie_min
+cie_max
+see_min
+see_max
+credits_registered
+credits_earned
+sgpa
+cgpa
+failed_courses
+backlog_courses
+semester_result
+registration_status
+is_repeat
+attendance_percentage
+assignment_completion
+lms_activity_score
+cie_marks
+see_marks
+total_marks
+grade_letter
+grade_point
+credit_points
+credits_earned_marks
+result
+dropout_risk
+has_registration
+has_marks
+failed_course_risk
+backlog_risk
+attendance_risk
+assignment_risk
+lms_risk
+cgpa_risk
+repeat_course_risk
+credit_completion_ratio
+
+======================================================================
+Missing Values
+======================================================================
+
+student_id                         0
+gender                             0
+is_active                          0
+attendance_min                     0
+attendance_max                     0
+assignment_min                     0
+assignment_max                     0
+cie_min                            0
+cie_max                            0
+see_min                            0
+see_max                            0
+credits_registered                 0
+credits_earned                     0
+sgpa                               0
+cgpa                               0
+failed_courses                     0
+backlog_courses                    0
+semester_result                    0
+registration_status                0
+is_repeat                          0
+attendance_percentage              0
+assignment_completion              0
+lms_activity_score                 0
+cie_marks                          0
+see_marks                          0
+total_marks                        0
+grade_letter                       0
+grade_point                        0
+credit_points                      0
+credits_earned_marks               0
+result                             0
+dropout_risk                       0
+has_registration                   0
+has_marks                          0
+failed_course_risk                 0
+backlog_risk                       0
+attendance_risk                    0
+assignment_risk                    0
+lms_risk                           0
+cgpa_risk                          0
+repeat_course_risk                 0
+credit_completion_ratio            0
+
+======================================================================
+Data Types
+======================================================================
+
+student_id                         str
+gender                             int64
+is_active                          bool
+attendance_min                     int64
+attendance_max                     int64
+assignment_min                     int64
+assignment_max                     int64
+cie_min                            int64
+cie_max                            int64
+see_min                            int64
+see_max                            int64
+credits_registered                 float64
+credits_earned                     float64
+sgpa                               float64
+cgpa                               float64
+failed_courses                     int64
+backlog_courses                    int64
+semester_result                    int64
+registration_status                int64
+is_repeat                          int64
+attendance_percentage              float64
+assignment_completion              float64
+lms_activity_score                 float64
+cie_marks                          float64
+see_marks                          float64
+total_marks                        float64
+grade_letter                       int64
+grade_point                        float64
+credit_points                      float64
+credits_earned_marks               float64
+result                             int64
+dropout_risk                       int64
+has_registration                   int64
+has_marks                          int64
+failed_course_risk                 int64
+backlog_risk                       int64
+attendance_risk                    int64
+assignment_risk                    int64
+lms_risk                           int64
+cgpa_risk                          int64
+repeat_course_risk                 int64
+credit_completion_ratio            float64

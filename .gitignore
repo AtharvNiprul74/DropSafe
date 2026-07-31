@@ -17,3 +17,6 @@ __pycache__/
 # Models (optional)
 models/*.joblib
 
+# Generated datasets
+data/generated/
+data/processed/

@@ -97,9 +97,7 @@ class ProfileEngine:
                     see_min=config["see"][0],
                     see_max=config["see"][1],
 
-                    dropout_probability=config[
-                        "dropout_probability"
-                    ],
+                    dropout_probability=0.0
                 )
 
             )

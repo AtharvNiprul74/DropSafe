@@ -46,6 +46,9 @@ DropSafe aims to solve these challenges through responsible AI-assisted monitori
 - Reduce student dropout.
 - Improve academic performance.
 - Support mentors with early intervention.
+- Reduce unnecessary mentor workload.
+- Provide privacy-preserving AI-assisted student support.
+- Recommend the right mentor at the right time.
 - Improve mentor monitoring.
 - Generate institutional reports useful for accreditation (NBA / NAAC).
 
@@ -182,6 +185,34 @@ Instead it should use generic concepts such as:
 - Performance Score
 
 ---
+
+---
+
+## Principle 7
+
+DropSafe is designed to minimize unnecessary human intervention.
+
+The AI chatbot should provide continuous support, monitor student progress, and attempt to stabilize situations before recommending mentor intervention.
+
+Mentor involvement should occur only when sustained evidence indicates that human assistance is likely to provide additional value.
+
+This approach protects student privacy, prevents mentor overload, and improves intervention quality.
+
+---
+
+## Principle 8
+
+Mentor attention is a limited resource.
+
+The platform should prioritize mentor workload by recommending only the students who require immediate human intervention instead of notifying mentors about every high-risk prediction.
+
+---
+
+## Principle 9
+
+AI Support is the first layer of intervention.
+
+Human intervention is the final escalation layer.
 
 # 8. Data Ownership
 

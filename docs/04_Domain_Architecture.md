@@ -85,23 +85,32 @@ Academic Period
 
 Assessable Learning Component
 
-Academic Evidence
-
 Student
 
-Mentor
+Student Identifier
 
+Enrollment
+
+Academic Record
+
+Attendance Record
+
+Assessment Record
+
+Mentor
 ---
 
 ## Responsibilities
 
 - Organization configuration
 - Academic structure
-- Student management
-- Mentor management
-- Attendance
-- Assessment Results
-- Historical academic records
+- Student Management
+- Student Enrollment Management
+- Academic Record Management
+- Attendance Management
+- Assessment Management
+- Academic Progress Tracking
+- Historical Academic Records
 
 ---
 
@@ -112,6 +121,37 @@ Mentor
 - Counseling
 
 ---
+
+## Academic Domain Relationships
+
+```
+Organization
+      │
+      ▼
+   Student
+      │
+      ▼
+Student Identifier
+      │
+      ▼
+ Enrollment
+      │
+      ▼
+Academic Record
+      ├──────────────┐
+      │              │
+      ▼              ▼
+Attendance      Assessment
+      │              │
+      └──────┬───────┘
+             ▼
+     Academic Evidence
+```
+
+Academic Evidence is derived from Attendance Records, Assessment Records, Grades, Backlogs and other academic indicators.
+
+It is consumed by the AI Domain to build Student Snapshots for prediction.
+
 
 # Domain 2 — Student Support Domain
 
@@ -239,7 +279,11 @@ Users
 
 Roles
 
+Permission Groups
+
 Permissions
+
+Authorization Policies
 
 Import Session
 
@@ -249,18 +293,43 @@ Audit Log
 
 Access Requests
 
----
-
 ## Responsibilities
 
 - Authentication
 - Authorization
+- Role Management
+- Permission Group Management
+- Permission Management
 - Privacy
-- Mentor access approval
-- Audit logging
-- Import history
+- Mentor Access Approval
+- Audit Logging
+- Import History
 
----
+## Governance Principles
+
+The Governance Domain manages authorization using a Role-Based Access Control (RBAC) model.
+
+Authorization follows this hierarchy:
+
+Organization
+
+↓
+
+Permissions
+
+↓
+
+Permission Groups
+
+↓
+
+Roles
+
+↓
+
+Users
+
+This allows organizations to create custom roles by combining Permission Groups without requiring backend code changes.
 
 ## Does NOT Handle
 

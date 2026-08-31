@@ -387,6 +387,16 @@ Never exposed to mentors.
 
 Retention period configurable by organization.
 
+# Data Retention
+
+Graduated Student records may be retained for up to one year after graduation.
+
+After the retention period, records must be removed or anonymized according to the organization's approved data-retention policy and applicable legal requirements.
+
+Retention rules apply across related academic, behavioural, AI, counseling, and governance records.
+
+Deletion or anonymization must preserve required audit and legal obligations.
+
 ---
 
 # Future Privacy Features

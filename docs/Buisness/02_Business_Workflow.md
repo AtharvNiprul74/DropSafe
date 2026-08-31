@@ -810,6 +810,11 @@ The Intervention Engine exists to:
 - Give AI an opportunity to stabilize the student.
 - Recommend human intervention only when required.
 
+Import Rule
+
+- A fatal import error must prevent the import from committing academic data.
+- Row-level validation failures may be excluded while valid records are committed, resulting in PARTIAL_SUCCESS.
+
 
 # WF-09 Privacy & Intelligent Escalation
 

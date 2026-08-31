@@ -165,6 +165,46 @@ Business Rules
 
 ---
 
+# SM-02A Enrollment Lifecycle
+
+Created
+
+↓
+
+Active
+
+↓
+
+Completed
+
+↓
+
+Graduated
+
+OR
+
+Transferred
+
+OR
+
+Cancelled
+
+# SM-02B Academic Record Lifecycle
+
+Created
+
+↓
+
+Evidence Imported
+
+↓
+
+Updated
+
+↓
+
+Historical
+
 # SM-03 Academic Period Lifecycle
 
 ```

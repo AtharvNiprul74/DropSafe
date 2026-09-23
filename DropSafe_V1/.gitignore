@@ -1,0 +1,124 @@
+# ==========================================
+# DropSafe V1 - Git Ignore
+# ==========================================
+
+# ------------------------------------------
+# Node.js / JavaScript / TypeScript
+# ------------------------------------------
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Build output
+dist/
+build/
+.vite/
+
+# Coverage
+coverage/
+
+# ------------------------------------------
+# Environment variables / secrets
+# ------------------------------------------
+.env
+.env.*
+!.env.example
+
+# ------------------------------------------
+# OS generated files
+# ------------------------------------------
+.DS_Store
+Thumbs.db
+
+# ------------------------------------------
+# IDE / Editor
+# ------------------------------------------
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+
+.idea/
+*.swp
+*.swo
+
+# ------------------------------------------
+# Python
+# ------------------------------------------
+__pycache__/
+*.py[cod]
+*.pyo
+
+.venv/
+venv/
+env/
+
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Python build output
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# ------------------------------------------
+# ML generated files
+# ------------------------------------------
+
+# Trained models
+*.pkl
+*.pickle
+*.joblib
+
+# ML generated datasets
+ml/data/processed/*
+ml/data/raw/*
+ml/data/synthetic/*
+
+# Keep directory structure
+!ml/data/processed/.gitkeep
+!ml/data/raw/.gitkeep
+!ml/data/synthetic/.gitkeep
+
+# ML outputs
+ml/outputs/*
+
+# Keep directory structure
+!ml/outputs/.gitkeep
+
+# Jupyter
+.ipynb_checkpoints/
+
+# ------------------------------------------
+# Logs
+# ------------------------------------------
+*.log
+logs/
+
+# ------------------------------------------
+# Temporary files
+# ------------------------------------------
+*.tmp
+*.temp
+*.cache
+
+# ------------------------------------------
+# Database local files
+# ------------------------------------------
+*.sqlite
+*.sqlite3
+*.db
+
+# ------------------------------------------
+# Prisma generated files
+# ------------------------------------------
+backend/prisma/generated/
+
+# ------------------------------------------
+# Test artifacts
+# ------------------------------------------
+test-results/
+playwright-report/

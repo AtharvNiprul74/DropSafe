@@ -1,9 +1,12 @@
+import MainLayout from "./layouts/MainLayout";
+import Dashboard from "./pages/Dashboard";
+
+
 function App() {
-  return (
-    <main>
-      <h1>DropSafe</h1>
-      <p>AI-Powered Student Dropout Prediction & Counseling System</p>
-    </main>
+  return(
+    <MainLayout>
+      <Dashboard/>
+    </MainLayout>
   );
 }
 

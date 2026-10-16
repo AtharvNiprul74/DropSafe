@@ -7,15 +7,20 @@ import pandas as pd
 import numpy as np
 import joblib
 
-from sklearn.ensemble import RandomForestClassifier
+try:
+    from lightgbm import LGBMClassifier
+except ImportError:
+    print("[FATAL] lightgbm is not installed. Run: pip install lightgbm")
+    sys.exit(1)
+
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score, f1_score
 
 MODEL_NAME = "DropSafe-Risk-Classifier"
-MODEL_VERSION = "v1.0.0"
+MODEL_VERSION = "v1.1.0"
 FEATURE_VERSION = "v1.0.0"
 TRAINING_DATASET_VERSION = "v1.0-draft-points"
-ALGORITHM = "RandomForestClassifier"
+ALGORITHM = "LGBMClassifier"
 
 CANONICAL_FEATURES = [
     "attendance_percentage",
@@ -78,12 +83,10 @@ def train_and_evaluate(features_df: pd.DataFrame, labels_df: pd.DataFrame):
         how="inner"
     )
 
-    # Fallback safeguard: if IDs differ across synthetic test runs but row counts match
     if len(merged_df) == 0 and len(features_df) == len(labels_df):
         merged_df = features_df.copy()
         merged_df["risk_label"] = labels_df["risk_label"].values
 
-    # 2. Filter out insufficient evidence rows per PRD §14/§30
     if "evidence_sufficient" in merged_df.columns:
         valid_df = merged_df[
             (merged_df["evidence_sufficient"] == True) &
@@ -95,7 +98,7 @@ def train_and_evaluate(features_df: pd.DataFrame, labels_df: pd.DataFrame):
     X = valid_df[CANONICAL_FEATURES]
     y = valid_df["risk_label"]
 
-    # 3. Stratified 80/20 train/test split
+    # 2. Stratified 80/20 train/test split
     X_train, X_test, y_train, y_test = train_test_split(
         X, y,
         test_size=0.20,
@@ -103,29 +106,34 @@ def train_and_evaluate(features_df: pd.DataFrame, labels_df: pd.DataFrame):
         stratify=y
     )
 
-    # 4. Train RandomForest Classifier
-    model = RandomForestClassifier(
+    # 3. Train LightGBM Classifier (Gradient Boosted Trees)
+    model = LGBMClassifier(
         n_estimators=100,
-        max_depth=6,
-        min_samples_split=5,
+        max_depth=5,
+        learning_rate=0.05,
+        num_leaves=31,
         class_weight="balanced",
-        random_state=42
+        random_state=42,
+        verbose=-1,
+        importance_type="gain"
     )
     model.fit(X_train, y_train)
 
-    # 5. Evaluate on Holdout Test Set
+    # 4. Evaluate on Holdout Test Set
     y_pred = model.predict(X_test)
     acc = accuracy_score(y_test, y_pred)
     macro_f1 = f1_score(y_test, y_pred, average="macro")
 
-    # Detailed metrics
     report_str = classification_report(y_test, y_pred, digits=4)
     labels_order = ["LOW", "MEDIUM", "HIGH"]
     cm = confusion_matrix(y_test, y_pred, labels=labels_order)
 
-    # Feature importances
+    # Normalized feature importances based on Information Gain
+    raw_fi = model.feature_importances_
+    fi_sum = raw_fi.sum()
+    norm_fi = (raw_fi / fi_sum) if fi_sum > 0 else raw_fi
     feature_importances = pd.Series(
-        model.feature_importances_,
+        norm_fi,
         index=CANONICAL_FEATURES
     ).sort_values(ascending=False)
 
@@ -192,13 +200,13 @@ Actual LOW       {cm[0][0]:<14} {cm[0][1]:<17} {cm[0][2]:<14}
 Actual MEDIUM    {cm[1][0]:<14} {cm[1][1]:<17} {cm[1][2]:<14}
 Actual HIGH      {cm[2][0]:<14} {cm[2][1]:<17} {cm[2][2]:<14}"""
 
-    report_md = f"""# DropSafe V1 — Model Training & Evaluation Report (Phase 3)
+    report_md = f"""# DropSafe V1 — Model Training & Evaluation Report (Phase 3 LightGBM)
 
 **Generated:** {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S UTC')}  
 **Model Name:** `{MODEL_NAME}`  
 **Model Version:** `{MODEL_VERSION}`  
 **Status:** `ACTIVE` (PRD §13 Single Active Model)  
-**Algorithm:** `{ALGORITHM}`  
+**Algorithm:** `{ALGORITHM}` (LightGBM Gradient Boosting)  
 **Feature Version:** `{FEATURE_VERSION}`  
 **Training Dataset Version:** `{TRAINING_DATASET_VERSION}`  
 **Model Artifact:** `{model_path}`  
@@ -234,7 +242,7 @@ Actual HIGH      {cm[2][0]:<14} {cm[2][1]:<17} {cm[2][2]:<14}"""
 
 ---
 
-## 4. Feature Importance Rankings (PRD §13 Features)
+## 4. Feature Importance Rankings (Information Gain)
 
 | Feature | Importance Weight |
 | :--- | :---: |
@@ -260,7 +268,7 @@ Actual HIGH      {cm[2][0]:<14} {cm[2][1]:<17} {cm[2][2]:<14}"""
 def main():
     def_feat, def_lbl, def_model, def_meta, def_rep = get_default_paths()
 
-    parser = argparse.ArgumentParser(description="DropSafe V1 — Train AI Risk Model (Phase 3)")
+    parser = argparse.ArgumentParser(description="DropSafe V1 — Train AI Risk Model via LightGBM (Phase 3)")
     parser.add_argument("--features", type=str, default=def_feat, help="Path to student_features.csv")
     parser.add_argument("--labels", type=str, default=def_lbl, help="Path to training_labels.csv")
     parser.add_argument("--model-out", type=str, default=def_model, help="Path to save model binary")
@@ -270,7 +278,7 @@ def main():
     args = parser.parse_args()
 
     print("=" * 72)
-    print("DropSafe V1 — ML Model Training Engine (Phase 3)")
+    print("DropSafe V1 — LightGBM Model Training Engine (Phase 3)")
     print(f"Model: {MODEL_NAME} | Version: {MODEL_VERSION} | Status: ACTIVE")
     print("=" * 72)
     print(f"Input Features:   {args.features}")
@@ -292,7 +300,7 @@ def main():
     labels_df = pd.read_csv(args.labels)
     print(f"      Features: {len(features_df):,} rows | Labels: {len(labels_df):,} rows")
 
-    print("[2/4] Training RandomForest Classifier (80/20 Stratified Split)...")
+    print("[2/4] Training LightGBM Classifier (80/20 Stratified Split)...")
     (
         model, valid_df, X_train, X_test,
         y_train, y_test, acc, macro_f1,
@@ -317,10 +325,10 @@ def main():
     )
 
     print("-" * 72)
-    print("SUCCESS: Model Trained & Deployed to ACTIVE state!")
+    print("SUCCESS: LightGBM Model Trained & Deployed to ACTIVE state!")
     print(f"  * Test Accuracy : {acc * 100:.2f}%")
     print(f"  * Macro F1-Score: {macro_f1 * 100:.2f}%")
-    print("\nFeature Importances (Top Signals):")
+    print("\nFeature Importances (Information Gain):")
     for k, v in fi.items():
         print(f"  * {k:<28}: {v * 100:5.2f}%")
     print("-" * 72)

@@ -1,0 +1,2 @@
+model_id,model_name,model_version,algorithm,feature_version,training_dataset_version,deployed_at,status,training_samples,test_samples,test_accuracy,test_macro_f1
+9077649d-c4c2-4ed1-96c9-3d527f70df6b,DropSafe-Risk-Classifier,v1.0.0,RandomForestClassifier,v1.0.0,v1.0-draft-points,2026-10-16T17:15:49.711149+00:00,ACTIVE,800,200,100.0,100.0

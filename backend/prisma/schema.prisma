@@ -1,0 +1,977 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ==========================================
+// 1. ENUMS
+// ==========================================
+
+enum OrganizationType {
+  SCHOOL
+  COLLEGE
+  UNIVERSITY
+  POLYTECHNIC
+  TRAINING_INSTITUTE
+  OTHER
+}
+
+enum OrganizationStatus {
+  ACTIVE
+  INACTIVE
+  ARCHIVED
+}
+
+enum UserStatus {
+  ACTIVE
+  LOCKED
+  INACTIVE
+}
+
+enum RetentionAction {
+  ARCHIVE
+  ANONYMIZE
+  DELETE
+}
+
+enum ProgramStatus {
+  ACTIVE
+  INACTIVE
+  ARCHIVED
+}
+
+enum LevelStatus {
+  ACTIVE
+  INACTIVE
+  ARCHIVED
+}
+
+enum PeriodStatus {
+  PLANNED
+  ACTIVE
+  COMPLETED
+  ARCHIVED
+}
+
+enum ComponentType {
+  SUBJECT
+  COURSE
+  MODULE
+  UNIT
+  COMPETENCY
+  OTHER
+}
+
+enum ComponentStatus {
+  ACTIVE
+  INACTIVE
+  ARCHIVED
+}
+
+enum StudentStatus {
+  ACTIVE
+  GRADUATED
+  TRANSFERRED
+  ARCHIVED
+}
+
+enum IdentifierStatus {
+  ACTIVE
+  ARCHIVED
+}
+
+enum EnrollmentStatus {
+  ACTIVE
+  COMPLETED
+  WITHDRAWN
+  TRANSFERRED
+  ARCHIVED
+}
+
+enum ImportType {
+  STUDENT
+  ENROLLMENT
+  ATTENDANCE
+  ASSESSMENT
+}
+
+enum ImportSourceType {
+  CSV
+  API
+}
+
+enum ImportSessionStatus {
+  CREATED
+  VALIDATING
+  VALIDATED
+  PROCESSING
+  COMPLETED
+  FAILED
+  CANCELLED
+}
+
+enum ImportResultStatus {
+  SUCCESS
+  PARTIAL_SUCCESS
+  FAILED
+}
+
+enum ChatbotSource {
+  WEB
+  MOBILE
+  WHATSAPP
+}
+
+enum ConversationStatus {
+  ACTIVE
+  COMPLETED
+  ARCHIVED
+}
+
+enum MessageSenderType {
+  STUDENT
+  BOT
+  SYSTEM
+}
+
+enum ModelStatus {
+  ACTIVE
+  RETIRED
+}
+
+enum SnapshotStatus {
+  GENERATED
+  PREDICTED
+  SUPERSEDED
+}
+
+enum Sentiment {
+  POSITIVE
+  NEUTRAL
+  NEGATIVE
+}
+
+enum RiskLabel {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+enum InterventionType {
+  ACADEMIC
+  ATTENDANCE
+  BEHAVIOURAL
+  COUNSELING
+  OTHER
+}
+
+enum InterventionPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+enum InterventionStatus {
+  PLANNED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+enum SessionType {
+  IN_PERSON
+  ONLINE
+  PHONE
+  WHATSAPP
+}
+
+enum CounselingSessionStatus {
+  SCHEDULED
+  COMPLETED
+  MISSED
+  CANCELLED
+}
+
+enum FollowUpType {
+  REVIEW
+  CHECK_IN
+  ACTION
+  REFERRAL
+  OTHER
+}
+
+enum FollowUpStatus {
+  PENDING
+  COMPLETED
+  MISSED
+  CANCELLED
+}
+
+enum ActorType {
+  USER
+  SYSTEM
+}
+
+enum AuditOutcome {
+  SUCCESS
+  FAILURE
+}
+
+enum AccessAction {
+  READ
+  WRITE
+  EXPORT
+}
+
+enum AccessOutcome {
+  ALLOWED
+  DENIED
+}
+
+enum NotificationType {
+  MENTOR_ALERT
+  STUDENT_REMINDER
+  FOLLOW_UP_REMINDER
+  IMPORT_NOTIFICATION
+  SYSTEM_NOTIFICATION
+}
+
+enum NotificationChannel {
+  EMAIL
+  SMS
+  WHATSAPP
+  IN_APP
+}
+
+enum NotificationStatus {
+  QUEUED
+  SENT
+  DELIVERED
+  FAILED
+}
+
+// ==========================================
+// 2. MASTER / ORGANIZATION DOMAIN
+// ==========================================
+
+model Organization {
+  id          String             @id @default(uuid())
+  name        String
+  code        String             @unique
+  type        OrganizationType
+  status      OrganizationStatus @default(ACTIVE)
+  created_at  DateTime           @default(now())
+  updated_at  DateTime           @updatedAt
+  archived_at DateTime?
+
+  // Relations
+  settings               OrganizationSettings?
+  users                  User[]
+  roles                  Role[]
+  learning_programs      LearningProgram[]
+  learning_levels        LearningLevel[]
+  academic_periods       AcademicPeriod[]
+  learning_components    LearningComponent[]
+  students               Student[]
+  student_identifiers    StudentIdentifier[]
+  enrollments            Enrollment[]
+  academic_records       AcademicRecord[]
+  attendance_records     AttendanceRecord[]
+  assessment_records     AssessmentRecord[]
+  import_sessions        ImportSession[]
+  chatbot_conversations  ChatbotConversation[]
+  student_snapshots      StudentSnapshot[]
+  prediction_history     PredictionHistory[]
+  interventions          Intervention[]
+  counseling_sessions    CounselingSession[]
+  follow_ups             FollowUp[]
+  audit_logs             AuditLog[]
+  access_logs            AccessLog[]
+  notification_history   NotificationHistory[]
+
+  @@map("organizations")
+}
+
+model OrganizationSettings {
+  id                                 String          @id @default(uuid())
+  organization_id                    String          @unique
+  organization                       Organization    @relation(fields: [organization_id], references: [id], onDelete: Cascade)
+  student_identifier_label           String          @default("Student ID")
+  academic_calendar_type             String          @default("SEMESTER")
+  default_upload_frequency           String          @default("WEEKLY")
+  chatbot_enabled                    Boolean         @default(true)
+  prediction_enabled                 Boolean         @default(true)
+  counseling_enabled                 Boolean         @default(true)
+  graduated_student_retention_months Int             @default(36)
+  retention_action                   RetentionAction @default(ARCHIVE)
+  created_at                         DateTime        @default(now())
+  updated_at                         DateTime        @updatedAt
+
+  @@map("organization_settings")
+}
+
+model User {
+  id                    String     @id @default(uuid())
+  organization_id       String
+  organization          Organization @relation(fields: [organization_id], references: [id], onDelete: Cascade)
+  first_name            String
+  last_name             String
+  email                 String
+  password_hash         String
+  phone                 String?
+  status                UserStatus @default(ACTIVE)
+  failed_login_attempts Int        @default(0)
+  last_login_at         DateTime?
+  created_by            String?
+  created_at            DateTime   @default(now())
+  updated_at            DateTime   @updatedAt
+
+  // Relations
+  user_roles             UserRole[]
+  import_sessions        ImportSession[]        @relation("UserImportSessions")
+  interventions          Intervention[]         @relation("ResponsibleUserInterventions")
+  counseling_sessions    CounselingSession[]    @relation("MentorCounselingSessions")
+  follow_ups             FollowUp[]             @relation("ResponsibleUserFollowUps")
+  audit_logs             AuditLog[]             @relation("UserAuditLogs")
+  access_logs            AccessLog[]            @relation("UserAccessLogs")
+  notifications          NotificationHistory[]  @relation("UserNotifications")
+
+  @@unique([organization_id, email])
+  @@index([organization_id])
+  @@map("users")
+}
+
+model Role {
+  id              String         @id @default(uuid())
+  organization_id String?
+  organization    Organization?  @relation(fields: [organization_id], references: [id], onDelete: Cascade)
+  name            String
+  description     String?
+  is_system       Boolean        @default(false)
+  created_at      DateTime       @default(now())
+  updated_at      DateTime       @updatedAt
+
+  role_permission_groups RolePermissionGroup[]
+  user_roles             UserRole[]
+
+  @@unique([organization_id, name])
+  @@map("roles")
+}
+
+model PermissionGroup {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  description String?
+  is_system   Boolean  @default(false)
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+
+  role_permission_groups       RolePermissionGroup[]
+  permission_group_permissions PermissionGroupPermission[]
+
+  @@map("permission_groups")
+}
+
+model Permission {
+  id          String   @id @default(uuid())
+  code        String   @unique
+  resource    String
+  action      String
+  description String?
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+
+  permission_group_permissions PermissionGroupPermission[]
+
+  @@map("permissions")
+}
+
+model RolePermissionGroup {
+  id                  String          @id @default(uuid())
+  role_id             String
+  role                Role            @relation(fields: [role_id], references: [id], onDelete: Cascade)
+  permission_group_id String
+  permission_group    PermissionGroup @relation(fields: [permission_group_id], references: [id], onDelete: Cascade)
+  created_at          DateTime        @default(now())
+
+  @@unique([role_id, permission_group_id])
+  @@map("role_permission_groups")
+}
+
+model PermissionGroupPermission {
+  id                  String          @id @default(uuid())
+  permission_group_id String
+  permission_group    PermissionGroup @relation(fields: [permission_group_id], references: [id], onDelete: Cascade)
+  permission_id       String
+  permission          Permission      @relation(fields: [permission_id], references: [id], onDelete: Cascade)
+  created_at          DateTime        @default(now())
+
+  @@unique([permission_group_id, permission_id])
+  @@map("permission_group_permissions")
+}
+
+model UserRole {
+  id         String   @id @default(uuid())
+  user_id    String
+  user       User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  role_id    String
+  role       Role     @relation(fields: [role_id], references: [id], onDelete: Cascade)
+  created_at DateTime @default(now())
+
+  @@unique([user_id, role_id])
+  @@map("user_roles")
+}
+
+// ==========================================
+// 3. ACADEMIC DOMAIN
+// ==========================================
+
+model LearningProgram {
+  id              String        @id @default(uuid())
+  organization_id String
+  organization    Organization  @relation(fields: [organization_id], references: [id], onDelete: Cascade)
+  program_code    String
+  name            String
+  description     String?
+  status          ProgramStatus @default(ACTIVE)
+  created_at      DateTime      @default(now())
+  updated_at      DateTime      @updatedAt
+
+  learning_levels LearningLevel[]
+
+  @@unique([organization_id, program_code])
+  @@unique([organization_id, name])
+  @@index([organization_id])
+  @@map("learning_programs")
+}
+
+model LearningLevel {
+  id                  String          @id @default(uuid())
+  organization_id     String
+  organization        Organization    @relation(fields: [organization_id], references: [id], onDelete: Cascade)
+  learning_program_id String
+  learning_program    LearningProgram @relation(fields: [learning_program_id], references: [id], onDelete: Cascade)
+  level_number        Int
+  name                String
+  status              LevelStatus     @default(ACTIVE)
+  created_at          DateTime        @default(now())
+  updated_at          DateTime        @updatedAt
+
+  academic_periods AcademicPeriod[]
+
+  @@unique([organization_id, learning_program_id, level_number])
+  @@index([organization_id])
+  @@map("learning_levels")
+}
+
+model AcademicPeriod {
+  id                String        @id @default(uuid())
+  organization_id   String
+  organization      Organization  @relation(fields: [organization_id], references: [id], onDelete: Cascade)
+  learning_level_id String
+  learning_level    LearningLevel @relation(fields: [learning_level_id], references: [id], onDelete: Cascade)
+  period_code       String
+  name              String
+  start_date        DateTime
+  end_date          DateTime
+  status            PeriodStatus  @default(PLANNED)
+  created_at        DateTime      @default(now())
+  updated_at        DateTime      @updatedAt
+
+  learning_components LearningComponent[]
+  enrollments         Enrollment[]
+
+  @@unique([organization_id, learning_level_id, period_code])
+  @@index([organization_id])
+  @@map("academic_periods")
+}
+
+model LearningComponent {
+  id                 String          @id @default(uuid())
+  organization_id    String
+  organization       Organization    @relation(fields: [organization_id], references: [id], onDelete: Cascade)
+  academic_period_id String
+  academic_period    AcademicPeriod  @relation(fields: [academic_period_id], references: [id], onDelete: Cascade)
+  component_code     String
+  name               String
+  type               ComponentType   @default(SUBJECT)
+  maximum_marks      Decimal         @default(100.0) @db.Decimal(5, 2)
+  passing_marks      Decimal         @default(40.0)  @db.Decimal(5, 2)
+  status             ComponentStatus @default(ACTIVE)
+  created_at         DateTime        @default(now())
+  updated_at         DateTime        @updatedAt
+
+  academic_records   AcademicRecord[]
+  attendance_records AttendanceRecord[]
+  assessment_records AssessmentRecord[]
+
+  @@unique([organization_id, academic_period_id, component_code])
+  @@index([organization_id])
+  @@map("learning_components")
+}
+
+model Student {
+  id            String        @id @default(uuid())
+  organization_id String
+  organization  Organization  @relation(fields: [organization_id], references: [id], onDelete: Cascade)
+  first_name    String
+  last_name     String
+  date_of_birth DateTime?
+  gender        String?
+  email         String?
+  phone         String?
+  status        StudentStatus @default(ACTIVE)
+  created_at    DateTime      @default(now())
+  updated_at    DateTime      @updatedAt
+
+  identifiers           StudentIdentifier[]
+  enrollments           Enrollment[]
+  conversations         ChatbotConversation[]
+  snapshots             StudentSnapshot[]
+  prediction_history    PredictionHistory[]
+  interventions         Intervention[]
+  counseling_sessions   CounselingSession[]
+  notifications         NotificationHistory[] @relation("StudentNotifications")
+
+  @@index([organization_id])
+  @@map("students")
+}
+
+model StudentIdentifier {
+  id               String           @id @default(uuid())
+  organization_id  String
+  organization     Organization     @relation(fields: [organization_id], references: [id], onDelete: Cascade)
+  student_id       String
+  student          Student          @relation(fields: [student_id], references: [id], onDelete: Cascade)
+  identifier_type  String
+  identifier_value String
+  is_primary       Boolean          @default(false)
+  status           IdentifierStatus @default(ACTIVE)
+  created_at       DateTime         @default(now())
+  updated_at       DateTime         @updatedAt
+
+  @@unique([organization_id, identifier_type, identifier_value])
+  @@index([organization_id, student_id])
+  @@map("student_identifiers")
+}
+
+model Enrollment {
+  id                 String           @id @default(uuid())
+  organization_id    String
+  organization       Organization     @relation(fields: [organization_id], references: [id], onDelete: Cascade)
+  student_id         String
+  student            Student          @relation(fields: [student_id], references: [id], onDelete: Cascade)
+  academic_period_id String
+  academic_period    AcademicPeriod   @relation(fields: [academic_period_id], references: [id], onDelete: Cascade)
+  status             EnrollmentStatus @default(ACTIVE)
+  enrollment_date    DateTime         @default(now())
+  created_at         DateTime         @default(now())
+  updated_at         DateTime         @updatedAt
+
+  academic_record    AcademicRecord?
+  conversations      ChatbotConversation[]
+  snapshots          StudentSnapshot[]
+
+  @@unique([organization_id, student_id, academic_period_id])
+  @@index([organization_id, student_id])
+  @@map("enrollments")
+}
+
+model AcademicRecord {
+  id                    String             @id @default(uuid())
+  organization_id       String
+  organization          Organization       @relation(fields: [organization_id], references: [id], onDelete: Cascade)
+  enrollment_id         String             @unique
+  enrollment            Enrollment         @relation(fields: [enrollment_id], references: [id], onDelete: Cascade)
+  learning_component_id String?
+  learning_component    LearningComponent? @relation(fields: [learning_component_id], references: [id], onDelete: SetNull)
+  created_at            DateTime           @default(now())
+  updated_at            DateTime           @updatedAt
+
+  attendance_records AttendanceRecord[]
+  assessment_records AssessmentRecord[]
+
+  @@index([organization_id])
+  @@map("academic_records")
+}
+
+model AttendanceRecord {
+  id                    String            @id @default(uuid())
+  organization_id       String
+  organization          Organization      @relation(fields: [organization_id], references: [id], onDelete: Cascade)
+  academic_record_id    String
+  academic_record       AcademicRecord    @relation(fields: [academic_record_id], references: [id], onDelete: Cascade)
+  learning_component_id String
+  learning_component    LearningComponent @relation(fields: [learning_component_id], references: [id], onDelete: Cascade)
+  attended_sessions     Int
+  total_sessions        Int
+  created_at            DateTime          @default(now())
+  updated_at            DateTime          @updatedAt
+
+  @@unique([organization_id, academic_record_id, learning_component_id])
+  @@index([organization_id])
+  @@map("attendance_records")
+}
+
+model AssessmentRecord {
+  id                    String            @id @default(uuid())
+  organization_id       String
+  organization          Organization      @relation(fields: [organization_id], references: [id], onDelete: Cascade)
+  academic_record_id    String
+  academic_record       AcademicRecord    @relation(fields: [academic_record_id], references: [id], onDelete: Cascade)
+  learning_component_id String
+  learning_component    LearningComponent @relation(fields: [learning_component_id], references: [id], onDelete: Cascade)
+  obtained_marks        Decimal           @db.Decimal(5, 2)
+  maximum_marks         Decimal           @db.Decimal(5, 2)
+  grading_outcome       String?
+  created_at            DateTime          @default(now())
+  updated_at            DateTime          @updatedAt
+
+  @@unique([organization_id, academic_record_id, learning_component_id])
+  @@index([organization_id])
+  @@map("assessment_records")
+}
+
+// ==========================================
+// 4. IMPORT DOMAIN
+// ==========================================
+
+model ImportSession {
+  id                   String              @id @default(uuid())
+  organization_id      String
+  organization         Organization        @relation(fields: [organization_id], references: [id], onDelete: Cascade)
+  initiated_by_user_id String
+  initiated_by_user    User                @relation("UserImportSessions", fields: [initiated_by_user_id], references: [id], onDelete: Restrict)
+  import_type          ImportType
+  source_type          ImportSourceType    @default(CSV)
+  status               ImportSessionStatus @default(CREATED)
+  started_at           DateTime?
+  completed_at         DateTime?
+  error_message        String?
+  created_at           DateTime            @default(now())
+  updated_at           DateTime            @updatedAt
+
+  import_files      ImportFile[]
+  import_report     ImportReport?
+  student_snapshots StudentSnapshot[]
+
+  @@index([organization_id])
+  @@map("import_sessions")
+}
+
+model ImportFile {
+  id                String        @id @default(uuid())
+  import_session_id String
+  import_session    ImportSession @relation(fields: [import_session_id], references: [id], onDelete: Cascade)
+  original_filename String
+  storage_key       String
+  file_size         Int
+  file_hash         String
+  mime_type         String
+  created_at        DateTime      @default(now())
+
+  @@unique([import_session_id, file_hash])
+  @@map("import_files")
+}
+
+model ImportReport {
+  id                String             @id @default(uuid())
+  import_session_id String             @unique
+  import_session    ImportSession      @relation(fields: [import_session_id], references: [id], onDelete: Cascade)
+  total_records     Int                @default(0)
+  valid_records     Int                @default(0)
+  rejected_records  Int                @default(0)
+  inserted_records  Int                @default(0)
+  updated_records   Int                @default(0)
+  result_status     ImportResultStatus
+  summary           Json?
+  created_at        DateTime           @default(now())
+
+  @@map("import_reports")
+}
+
+// ==========================================
+// 5. BEHAVIOUR DOMAIN
+// ==========================================
+
+model ChatbotConversation {
+  id              String             @id @default(uuid())
+  organization_id String
+  organization    Organization       @relation(fields: [organization_id], references: [id], onDelete: Cascade)
+  student_id      String
+  student         Student            @relation(fields: [student_id], references: [id], onDelete: Cascade)
+  enrollment_id   String?
+  enrollment      Enrollment?        @relation(fields: [enrollment_id], references: [id], onDelete: SetNull)
+  source          ChatbotSource      @default(WHATSAPP)
+  status          ConversationStatus @default(ACTIVE)
+  started_at      DateTime           @default(now())
+  ended_at        DateTime?
+  created_at      DateTime           @default(now())
+  updated_at      DateTime           @updatedAt
+
+  messages ChatbotMessage[]
+
+  @@index([organization_id, student_id])
+  @@map("chatbot_conversations")
+}
+
+model ChatbotMessage {
+  id                String               @id @default(uuid())
+  conversation_id   String
+  conversation      ChatbotConversation  @relation(fields: [conversation_id], references: [id], onDelete: Cascade)
+  sender_type       MessageSenderType
+  message_text      String
+  message_timestamp DateTime             @default(now())
+  created_at        DateTime             @default(now())
+
+  @@index([conversation_id])
+  @@map("chatbot_messages")
+}
+
+// ==========================================
+// 6. AI DOMAIN
+// ==========================================
+
+model AiModelMetadata {
+  id                       String      @id @default(uuid())
+  model_name               String
+  model_version            String      @unique
+  algorithm                String
+  feature_version          String
+  training_dataset_version String
+  deployment_timestamp     DateTime    @default(now())
+  status                   ModelStatus @default(ACTIVE)
+  created_at               DateTime    @default(now())
+  updated_at               DateTime    @updatedAt
+
+  @@map("ai_model_metadata")
+}
+
+model StudentSnapshot {
+  id                         String         @id @default(uuid())
+  organization_id            String
+  organization               Organization   @relation(fields: [organization_id], references: [id], onDelete: Cascade)
+  student_id                 String
+  student                    Student        @relation(fields: [student_id], references: [id], onDelete: Cascade)
+  enrollment_id              String
+  enrollment                 Enrollment     @relation(fields: [enrollment_id], references: [id], onDelete: Cascade)
+  import_session_id          String?
+  import_session             ImportSession? @relation(fields: [import_session_id], references: [id], onDelete: SetNull)
+  status                     SnapshotStatus @default(GENERATED)
+  attendance_percentage      Decimal?       @db.Decimal(5, 2)
+  overall_marks_percentage   Decimal?       @db.Decimal(5, 2)
+  failed_learning_components Int?           @default(0)
+  backlog_count              Int?           @default(0)
+  behaviour_score            Decimal?       @db.Decimal(5, 2)
+  engagement_score           Decimal?       @db.Decimal(5, 2)
+  sentiment_score            Decimal?       @db.Decimal(5, 2)
+  snapshot_generated_at      DateTime       @default(now())
+  created_at                 DateTime       @default(now())
+  updated_at                 DateTime       @updatedAt
+
+  behaviour_summary  BehaviourSummary?
+  prediction         Prediction?
+  prediction_history PredictionHistory[]
+
+  @@unique([organization_id, enrollment_id, import_session_id])
+  @@index([organization_id, student_id])
+  @@map("student_snapshots")
+}
+
+model BehaviourSummary {
+  id                  String          @id @default(uuid())
+  student_snapshot_id String          @unique
+  student_snapshot    StudentSnapshot @relation(fields: [student_snapshot_id], references: [id], onDelete: Cascade)
+  summary             String
+  dominant_sentiment  Sentiment
+  confidence_score    Decimal         @db.Decimal(5, 2)
+  ai_model_version    String
+  generation_timestamp DateTime       @default(now())
+  created_at          DateTime        @default(now())
+
+  @@map("behaviour_summaries")
+}
+
+model Prediction {
+  id                  String          @id @default(uuid())
+  student_snapshot_id String          @unique
+  student_snapshot    StudentSnapshot @relation(fields: [student_snapshot_id], references: [id], onDelete: Cascade)
+  ai_model_version    String
+  risk_label          RiskLabel
+  prediction_score    Decimal         @db.Decimal(5, 2) // Prediction confidence percentage 0-100
+  generated_at        DateTime        @default(now())
+  created_at          DateTime        @default(now())
+
+  interventions Intervention[]
+
+  @@map("predictions")
+}
+
+model PredictionHistory {
+  id                    String          @id @default(uuid())
+  organization_id       String
+  organization          Organization    @relation(fields: [organization_id], references: [id], onDelete: Cascade)
+  student_id            String
+  student               Student         @relation(fields: [student_id], references: [id], onDelete: Cascade)
+  student_snapshot_id   String
+  student_snapshot      StudentSnapshot @relation(fields: [student_snapshot_id], references: [id], onDelete: Cascade)
+  ai_model_version      String
+  risk_label            RiskLabel
+  risk_probability      Decimal         @db.Decimal(5, 2)
+  prediction_confidence Decimal         @db.Decimal(5, 2)
+  recorded_at           DateTime        @default(now())
+  created_at            DateTime        @default(now())
+
+  @@index([organization_id, student_id])
+  @@map("prediction_history")
+}
+
+// ==========================================
+// 7. COUNSELING DOMAIN
+// ==========================================
+
+model Intervention {
+  id                  String               @id @default(uuid())
+  organization_id     String
+  organization        Organization         @relation(fields: [organization_id], references: [id], onDelete: Cascade)
+  student_id          String
+  student             Student              @relation(fields: [student_id], references: [id], onDelete: Cascade)
+  prediction_id       String?
+  prediction          Prediction?          @relation(fields: [prediction_id], references: [id], onDelete: SetNull)
+  responsible_user_id String
+  responsible_user    User                 @relation("ResponsibleUserInterventions", fields: [responsible_user_id], references: [id], onDelete: Restrict)
+  intervention_type   InterventionType
+  priority            InterventionPriority @default(MEDIUM)
+  status              InterventionStatus   @default(PLANNED)
+  title               String
+  description         String?
+  planned_start_date  DateTime?
+  completed_at        DateTime?
+  cancelled_at        DateTime?
+  created_at          DateTime             @default(now())
+  updated_at          DateTime             @updatedAt
+
+  counseling_sessions CounselingSession[]
+  follow_ups          FollowUp[]
+
+  @@index([organization_id, student_id])
+  @@map("interventions")
+}
+
+model CounselingSession {
+  id                    String                  @id @default(uuid())
+  organization_id       String
+  organization          Organization            @relation(fields: [organization_id], references: [id], onDelete: Cascade)
+  intervention_id       String
+  intervention          Intervention            @relation(fields: [intervention_id], references: [id], onDelete: Cascade)
+  student_id            String
+  student               Student                 @relation(fields: [student_id], references: [id], onDelete: Cascade)
+  responsible_mentor_id String
+  responsible_mentor    User                    @relation("MentorCounselingSessions", fields: [responsible_mentor_id], references: [id], onDelete: Restrict)
+  session_type          SessionType             @default(IN_PERSON)
+  status                CounselingSessionStatus @default(SCHEDULED)
+  scheduled_at          DateTime
+  started_at            DateTime?
+  ended_at              DateTime?
+  session_notes         String?
+  outcome               String?
+  created_at            DateTime                @default(now())
+  updated_at            DateTime                @updatedAt
+
+  follow_ups FollowUp[]
+
+  @@index([organization_id, intervention_id])
+  @@map("counseling_sessions")
+}
+
+model FollowUp {
+  id                    String            @id @default(uuid())
+  organization_id       String
+  organization          Organization      @relation(fields: [organization_id], references: [id], onDelete: Cascade)
+  intervention_id       String
+  intervention          Intervention      @relation(fields: [intervention_id], references: [id], onDelete: Cascade)
+  counseling_session_id String?
+  counseling_session    CounselingSession? @relation(fields: [counseling_session_id], references: [id], onDelete: SetNull)
+  responsible_user_id   String
+  responsible_user      User              @relation("ResponsibleUserFollowUps", fields: [responsible_user_id], references: [id], onDelete: Restrict)
+  follow_up_type        FollowUpType      @default(CHECK_IN)
+  status                FollowUpStatus    @default(PENDING)
+  scheduled_date        DateTime
+  completed_at          DateTime?
+  cancelled_at          DateTime?
+  notes                 String?
+  outcome               String?
+  created_at            DateTime          @default(now())
+  updated_at            DateTime          @updatedAt
+
+  @@index([organization_id, intervention_id])
+  @@map("follow_ups")
+}
+
+// ==========================================
+// 8. GOVERNANCE DOMAIN
+// ==========================================
+
+model AuditLog {
+  id              String       @id @default(uuid())
+  organization_id String
+  organization    Organization @relation(fields: [organization_id], references: [id], onDelete: Cascade)
+  actor_type      ActorType    @default(USER)
+  actor_user_id   String?
+  actor_user      User?        @relation("UserAuditLogs", fields: [actor_user_id], references: [id], onDelete: SetNull)
+  action          String
+  entity_type     String
+  entity_id       String?
+  outcome         AuditOutcome @default(SUCCESS)
+  details         Json?
+  ip_address      String?
+  user_agent      String?
+  timestamp       DateTime     @default(now())
+
+  @@index([organization_id, timestamp])
+  @@map("audit_logs")
+}
+
+model AccessLog {
+  id              String        @id @default(uuid())
+  organization_id String
+  organization    Organization  @relation(fields: [organization_id], references: [id], onDelete: Cascade)
+  actor_user_id   String?
+  actor_user      User?         @relation("UserAccessLogs", fields: [actor_user_id], references: [id], onDelete: SetNull)
+  resource        String
+  action          AccessAction
+  outcome         AccessOutcome
+  denial_reason   String?
+  ip_address      String?
+  user_agent      String?
+  timestamp       DateTime      @default(now())
+
+  @@index([organization_id, timestamp])
+  @@map("access_logs")
+}
+
+model NotificationHistory {
+  id                   String              @id @default(uuid())
+  organization_id      String
+  organization         Organization        @relation(fields: [organization_id], references: [id], onDelete: Cascade)
+  recipient_user_id    String?
+  recipient_user       User?               @relation("UserNotifications", fields: [recipient_user_id], references: [id], onDelete: SetNull)
+  recipient_student_id String?
+  recipient_student    Student?            @relation("StudentNotifications", fields: [recipient_student_id], references: [id], onDelete: SetNull)
+  notification_type    NotificationType
+  channel              NotificationChannel
+  status               NotificationStatus  @default(QUEUED)
+  title                String
+  message              String
+  sent_at              DateTime?
+  delivered_at         DateTime?
+  created_at           DateTime            @default(now())
+
+  @@index([organization_id, created_at])
+  @@map("notification_history")
+}

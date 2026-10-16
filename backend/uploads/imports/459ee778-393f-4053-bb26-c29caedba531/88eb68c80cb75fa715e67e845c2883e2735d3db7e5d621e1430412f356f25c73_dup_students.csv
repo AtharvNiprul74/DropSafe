@@ -1,0 +1,4 @@
+first_name,last_name,prn,email,gender
+Aarav,Patel,PRN-M3-DUP-1792151614541,aarav.dup@dropsafe.demo,Male
+Pooja,Rao,PRN-M3-OK-1792151614541,pooja.ok@dropsafe.demo,Female
+Duplicate,Student,PRN-M3-DUP-1792151614541,dup@dropsafe.demo,Male

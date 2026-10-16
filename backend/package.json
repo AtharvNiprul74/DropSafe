@@ -1,0 +1,59 @@
+{
+  "name": "dropsafe-backend",
+  "version": "1.0.0",
+  "description": "DropSafe V1 - Student Risk Detection and Early Intervention Platform Backend",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:push": "prisma db push",
+    "prisma:seed": "tsx prisma/seed.ts",
+    "test:module1": "tsx test-module1.ts",
+    "test:module2": "tsx test-module2.ts",
+    "test:module3": "tsx test-module3.ts",
+    "test:module4": "tsx test-module4.ts",
+    "test:module5": "tsx test-module5.ts",
+    "test": "tsx test-module1.ts && tsx test-module2.ts && tsx test-module3.ts && tsx test-module4.ts && tsx test-module5.ts"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  },
+  "keywords": [
+    "dropsafe",
+    "risk-detection",
+    "prisma",
+    "express",
+    "typescript",
+    "multi-tenant"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "6.4.1",
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.8",
+    "express": "^5.3.0",
+    "express-rate-limit": "^8.7.1",
+    "helmet": "^8.3.0",
+    "jsonwebtoken": "^9.0.3",
+    "multer": "^2.4.0",
+    "uuid": "^14.0.3",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/multer": "^2.3.0",
+    "@types/node": "^26.6.5",
+    "@types/uuid": "^10.0.0",
+    "prisma": "6.4.1",
+    "tsx": "^4.23.15",
+    "typescript": "^6.0.3"
+  }
+}

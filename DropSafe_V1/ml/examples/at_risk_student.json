@@ -1,0 +1,24 @@
+{
+  "organization_id": "ORG-001",
+  "student_id": "STU-1001",
+  "enrollment_id": "ENR-2026-1001",
+  "import_session_id": "IMP-2026-10-01",
+  "evidence": {
+    "attendance_records": [
+      {"learning_component_id": "MATH-201", "attended_sessions": 18, "total_sessions": 40},
+      {"learning_component_id": "PHY-201",  "attended_sessions": 20, "total_sessions": 38},
+      {"learning_component_id": "CS-210",   "attended_sessions": 25, "total_sessions": 42}
+    ],
+    "assessment_records": [
+      {"learning_component_id": "MATH-201", "obtained_marks": 9,  "maximum_marks": 30, "grading_outcome": "FAIL"},
+      {"learning_component_id": "MATH-201", "obtained_marks": 22, "maximum_marks": 70, "grading_outcome": "FAIL"},
+      {"learning_component_id": "PHY-201",  "obtained_marks": 31, "maximum_marks": 100, "grading_outcome": "FAIL"},
+      {"learning_component_id": "CS-210",   "obtained_marks": 48, "maximum_marks": 100, "grading_outcome": "PASS"}
+    ],
+    "prior_assessment_records": [
+      {"learning_component_id": "MATH-101", "academic_period_order": 1, "obtained_marks": 33, "maximum_marks": 100, "grading_outcome": "FAIL"},
+      {"learning_component_id": "CHEM-101", "academic_period_order": 1, "obtained_marks": 61, "maximum_marks": 100, "grading_outcome": "PASS"}
+    ],
+    "behaviour": {"behaviour_score": 38, "engagement_score": 25, "sentiment_score": 28}
+  }
+}

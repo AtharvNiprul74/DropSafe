@@ -1,0 +1,11 @@
+{
+  "organization_id": "ORG-001",
+  "student_id": "STU-1003",
+  "enrollment_id": "ENR-2026-1003",
+  "evidence": {
+    "attendance_records": [
+      {"learning_component_id": "MATH-201", "attended_sessions": 3, "total_sessions": 4}
+    ],
+    "assessment_records": []
+  }
+}

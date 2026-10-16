@@ -1,0 +1,60 @@
+{
+  "model_name": "dropsafe-risk",
+  "model_version": "dropsafe-risk-v1",
+  "algorithm": "LightGBM gradient-boosted trees (binary) + isotonic calibration",
+  "feature_version": "fe-v1",
+  "feature_columns": [
+    "attendance_percentage",
+    "overall_marks_percentage",
+    "failed_learning_components",
+    "backlog_count",
+    "behaviour_score",
+    "engagement_score",
+    "sentiment_score"
+  ],
+  "monotone_constraints": {
+    "attendance_percentage": -1,
+    "overall_marks_percentage": -1,
+    "failed_learning_components": 1,
+    "backlog_count": 1,
+    "behaviour_score": -1,
+    "engagement_score": -1,
+    "sentiment_score": -1
+  },
+  "training_dataset_version": "synthetic-v1-n8000-s42",
+  "training_dataset_synthetic": true,
+  "dataset_rows_used": 7684,
+  "dataset_rows_excluded_insufficient_evidence": 316,
+  "lgbm_params": {
+    "objective": "binary",
+    "metric": [
+      "binary_logloss",
+      "auc"
+    ],
+    "learning_rate": 0.03,
+    "num_leaves": 15,
+    "min_data_in_leaf": 40,
+    "feature_fraction": 0.9,
+    "bagging_fraction": 0.8,
+    "bagging_freq": 1,
+    "lambda_l2": 1.0,
+    "verbose": -1,
+    "seed": 42,
+    "deterministic": true,
+    "num_threads": 2,
+    "monotone_constraints": [
+      -1,
+      -1,
+      1,
+      1,
+      -1,
+      -1,
+      -1
+    ]
+  },
+  "risk_band_thresholds": {
+    "MEDIUM": 0.3,
+    "HIGH": 0.6
+  },
+  "trained_at": "2026-10-16T19:46:54.200512+00:00"
+}

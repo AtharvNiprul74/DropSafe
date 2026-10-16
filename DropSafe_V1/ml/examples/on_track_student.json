@@ -1,0 +1,16 @@
+{
+  "organization_id": "ORG-001",
+  "student_id": "STU-1002",
+  "enrollment_id": "ENR-2026-1002",
+  "evidence": {
+    "attendance_records": [
+      {"learning_component_id": "MATH-201", "attended_sessions": 37, "total_sessions": 40},
+      {"learning_component_id": "PHY-201",  "attended_sessions": 35, "total_sessions": 38}
+    ],
+    "assessment_records": [
+      {"learning_component_id": "MATH-201", "obtained_marks": 78, "maximum_marks": 100, "grading_outcome": "PASS"},
+      {"learning_component_id": "PHY-201",  "obtained_marks": 71, "maximum_marks": 100, "grading_outcome": "PASS"}
+    ],
+    "behaviour": {"behaviour_score": 74, "engagement_score": 80, "sentiment_score": 66}
+  }
+}

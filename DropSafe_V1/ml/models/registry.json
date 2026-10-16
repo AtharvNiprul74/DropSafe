@@ -1,0 +1,14 @@
+{
+  "model_name": "dropsafe-risk",
+  "models": [
+    {
+      "model_name": "dropsafe-risk",
+      "model_version": "dropsafe-risk-v1",
+      "algorithm": "LightGBM gradient-boosted trees (binary) + isotonic calibration",
+      "feature_version": "fe-v1",
+      "training_dataset_version": "synthetic-v1-n8000-s42",
+      "deployment_timestamp": "2026-10-16T19:46:54.431696+00:00",
+      "status": "ACTIVE"
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "training_dataset_version": "synthetic-v1-n8000-s42",
+  "n_students": 8000,
+  "seed": 42,
+  "synthetic": true,
+  "positive_rate": 0.2176,
+  "warning": "SIMULATED DATA \u2014 not for decisions about real students."
+}

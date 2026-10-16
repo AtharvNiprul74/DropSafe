@@ -1,0 +1,8 @@
+{
+  "training_dataset_version": "synthetic-v1-n300-s2026",
+  "n_students": 300,
+  "seed": 2026,
+  "synthetic": true,
+  "positive_rate": 0.1533,
+  "warning": "SIMULATED DATA \u2014 not for decisions about real students."
+}

@@ -1,0 +1,26 @@
+# systemd unit for Debian 13. Edit User/paths if your folder differs.
+# Install:
+#   sudo cp deploy/dropsafe-ml.service /etc/systemd/system/
+#   sudo systemctl daemon-reload && sudo systemctl enable --now dropsafe-ml
+[Unit]
+Description=DropSafe ML Service (student risk prediction API)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=prince
+Group=prince
+WorkingDirectory=/home/prince/DropSafe/DropSafe_V1/ml
+# 127.0.0.1 = only the local backend can call it (recommended; no service auth yet)
+ExecStart=/home/prince/DropSafe/DropSafe_V1/ml/.venv/bin/python -m dropsafe_ml serve --host 127.0.0.1 --port 8000
+Restart=on-failure
+RestartSec=3
+Environment=PYTHONUNBUFFERED=1
+# Hardening
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+
+[Install]
+WantedBy=multi-user.target

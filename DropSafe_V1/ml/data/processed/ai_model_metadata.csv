@@ -1,2 +1,2 @@
-model_id,model_name,model_version,algorithm,feature_version,training_dataset_version,deployed_at,status,training_samples,test_samples,test_accuracy,test_macro_f1
-acf097c4-745e-4dee-ba05-fe7200ca12b3,DropSafe-Risk-Classifier,v1.1.0,LGBMClassifier,v1.0.0,v1.0-draft-points,2026-10-16T17:57:14.853740+00:00,ACTIVE,800,200,99.5,98.84
+model_id,model_name,model_version,algorithm,feature_version,training_dataset_version,deployed_at,status,training_samples,test_samples,cv_folds,cv_mean_accuracy,cv_mean_macro_f1
+44f3cbc1-fc54-428d-a43c-a7fe99485558,DropSafe-Risk-Classifier,v2.0.0-lgbm-kfold,LightGBM (5-Fold Stratified CV),v1.0.0,v2.0-realistic-multivariate,2026-10-16T18:37:16.129669+00:00,ACTIVE,1000,1000,5,83.7,83.64
